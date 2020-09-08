@@ -105,7 +105,7 @@ func createConections():
 			graph.connect_points (point, joinPoint, false)
 
 func _draw():
-	if !showLines || true:
+	if !showLines:
 		return
 	
 	var points = graph.get_points()

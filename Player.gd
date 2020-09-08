@@ -10,7 +10,7 @@ var pathFinder
 
 var speed = 100
 var jumpForce = 160
-var gravity = 10
+var gravity = 550
 var padding = 1
 var finishPadding = 5
 
@@ -64,7 +64,7 @@ func _process(delta):
 		movement[0] = 0
 	
 	if !is_on_floor():
-		movement[1] += gravity
+		movement[1] += gravity * delta
 #	elif movement[1] > 0:
 #		movement[1] = 0
 	
