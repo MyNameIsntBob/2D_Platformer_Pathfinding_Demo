@@ -105,7 +105,7 @@ func createConections():
 			graph.connect_points (point, joinPoint, false)
 
 func _draw():
-	if !showLines || true:
+	if !showLines:
 		return
 	
 	var points = graph.get_points()
@@ -214,7 +214,7 @@ func cellType(pos, global = false, isAbove = false):
 func createPoint(cell):
 	var above = Vector2(cell[0], cell[1] - 1)
 	var pos = tileMap.map_to_world(above) + Vector2(cell_size/2, cell_size/2)
-	if graph.get_point_position(graph.get_closest_point(pos)) == pos:
+	if graph.get_points() and graph.get_point_position(graph.get_closest_point(pos)) == pos:
 		return
 	if (showLines):
 		var test = TEST.instance()
