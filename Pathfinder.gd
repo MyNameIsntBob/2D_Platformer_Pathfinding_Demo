@@ -155,7 +155,7 @@ func _draw():
 		for joinPoint in pointsToJoin:
 			draw_line(pos, graph.get_point_position(joinPoint), Color(255, 0, 0), 1)
 		for joinPoint in noBiJoin:
-			draw_line(pos, graph.get_point_position(joinPoint), Color(255, 0, 0), 1)
+			draw_line(pos, graph.get_point_position(joinPoint), Color(0, 255, 0), 1)
 			
 func createMap():
 	var space_state = get_world_2d().direct_space_state
