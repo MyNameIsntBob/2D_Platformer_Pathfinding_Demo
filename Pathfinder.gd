@@ -2,7 +2,7 @@ extends Node2D
 
 var cell_size = 16
 
-var jumpHeight = 1
+var jumpHeight = 2
 var jumpDistance = 2
 
 var tileMap
@@ -14,8 +14,6 @@ const TEST = preload("res://face.tscn")
 
 
 func findPath(start, end):
-#	var first_point = graph.get_closest_position_in_segment(start)
-#	var finish = graph.get_closest_position_in_segment(end)
 	var first_point = graph.get_closest_point(start)
 	var finish = graph.get_closest_point(end)
 	var path = graph.get_id_path(first_point, finish)
@@ -68,9 +66,10 @@ func createConections():
 
 		for newPoint in points:
 			var newPos = graph.get_point_position(newPoint)
-			if (stat[1] == 0 and newPos[1] == pos[1] and newPos[0] > pos[0]):
-				if closestRight < 0 or newPos[0] < graph.get_point_position(closestRight)[0]: 
-					closestRight = newPoint
+			if (stat[1] == 0): 
+				if (newPos[1] == pos[1] and newPos[0] > pos[0]):
+					if closestRight < 0 or newPos[0] < graph.get_point_position(closestRight)[0]: 
+						closestRight = newPoint
 			if (stat[0] == -1):
 				if (newPos[0] == pos[0] - cell_size and newPos[1] > pos[1]):
 					if closestLeftDrop < 0 or newPos[1] < graph.get_point_position(closestLeftDrop)[1]:
@@ -89,12 +88,12 @@ func createConections():
 		if (closestRight > 0):
 			pointsToJoin.append(closestRight)
 		if (closestLeftDrop > 0):
-			if (graph.get_point_position(closestLeftDrop)[1] == pos[1] + cell_size):
+			if (graph.get_point_position(closestLeftDrop)[1] <= pos[1] + (cell_size * jumpHeight)):
 				pointsToJoin.append(closestLeftDrop)
 			else:
 				noBiJoin.append(closestLeftDrop)
 		if (closestRightDrop > 0):
-			if (graph.get_point_position(closestRightDrop)[1] == pos[1] + cell_size):
+			if (graph.get_point_position(closestRightDrop)[1] <= pos[1] + (cell_size * jumpHeight)):
 				pointsToJoin.append(closestRightDrop)
 			else:
 				noBiJoin.append(closestRightDrop)
@@ -142,12 +141,12 @@ func _draw():
 		if (closestRight > 0):
 			pointsToJoin.append(closestRight)
 		if (closestLeftDrop > 0):
-			if (graph.get_point_position(closestLeftDrop)[1] == pos[1] + cell_size):
+			if (graph.get_point_position(closestLeftDrop)[1] <= pos[1] + (cell_size * jumpHeight)):
 				pointsToJoin.append(closestLeftDrop)
 			else:
 				noBiJoin.append(closestLeftDrop)
 		if (closestRightDrop > 0):
-			if (graph.get_point_position(closestRightDrop)[1] == pos[1] + cell_size):
+			if (graph.get_point_position(closestRightDrop)[1] <= pos[1] + (cell_size * jumpHeight)):
 				pointsToJoin.append(closestRightDrop)
 			else:
 				noBiJoin.append(closestRightDrop)
@@ -178,7 +177,7 @@ func createMap():
 				var pos = tileMap.map_to_world(Vector2(cell[0] - 1, cell[1]))
 				var pto = Vector2(pos[0], pos[1] + 1000)
 				var result = space_state.intersect_ray(pos, pto)
-				if (result):					
+				if (result):
 					createPoint(tileMap.world_to_map(result.position))
 
 func cellType(pos, global = false, isAbove = false):

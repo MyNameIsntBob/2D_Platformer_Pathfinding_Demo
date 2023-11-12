@@ -9,7 +9,7 @@ var currentTarget
 var pathFinder
 
 var speed = 100
-var jumpForce = 160
+var jumpForce = 200
 var gravity = 550
 var padding = 1
 var finishPadding = 5
