@@ -185,28 +185,28 @@ func cellType(pos, global = false, isAbove = false):
 	if (global):
 		pos = tileMap.world_to_map(pos)
 	if isAbove:
-		pos = Vector2(pos[0], pos[1] + 1)
+		pos += Vector2.DOWN
 	var cells = tileMap.get_used_cells()
 	
 	
-	if (Vector2(pos[0], pos[1] - 1) in cells):
+	if (pos + Vector2.UP in cells):
 #		If there's a block above the passes one, return null
 		return null
 	var results = Vector2(0, 0)
 	
 #	Checking left
-	if Vector2(pos[0] - 1, pos[1] - 1) in cells:
+	if pos + Vector2.UP + Vector2.LEFT in cells:
 #		if wall
 		results[0] = 1
-	elif !(Vector2(pos[0] - 1, pos[1]) in cells):
+	elif !(pos + Vector2.LEFT in cells):
 #		if drop
 		results[0] = -1
 		
 #	Checking right
-	if Vector2(pos[0] + 1, pos[1] - 1) in cells:
+	if pos + Vector2.UP + Vector2.RIGHT in cells:
 #		if wall
 		results[1] = 1
-	elif !(Vector2(pos[0] + 1, pos[1]) in cells):
+	elif !(pos + Vector2.RIGHT in cells):
 #		if drop
 		results[1] = -1
 	return results
